@@ -1,0 +1,77 @@
+<html>
+	<head>
+    <title>Merry Christmas</title>
+    <style>
+      #wheel {
+        /*transition: transform 5s ease-in-out;*/
+      }
+
+      #button-container {
+        /*margin-top: 20px;*/
+        position: absolute;
+        transform: translateY(295px);
+        z-index: 999;
+      }
+    </style>
+    <link href="library/fontawesome-free-5.10.2-web/css/all.min.css" rel="stylesheet">
+    <link href="library/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="library/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; overflow: hidden;">
+      <div style="position: absolute; transform: translateY(-243px); z-index: 999;">
+        <i class="fas fa-caret-down fa-8x" style="color: goldenrod;"></i>
+      </div>
+      <div id="wheel" style="width: 500px; height: 500px; background: #000; border-radius: 50%; border: 5px solid grey; text-align: center; display: flex; align-items: center; justify-content: center;">
+        <!-- <span style="color: #fff;">A</span> -->
+        <img src="img/wheel.png">
+      </div>
+      <div id="button-container">
+        <button id="spin" class="btn btn-primary p-1 px-2 font-weight-bold" onclick="getAngle()">SPIN&nbsp;&nbsp;<i class="fas fa-bullseye"></i></button>
+        <button id="reset" class="btn btn-outline-danger p-1 px-2 font-weight-bold" onclick="lottery()">RESET&nbsp;&nbsp;<i class="fas fa-sync "></i></button>
+      </div>
+      <footer style="position: absolute; bottom: 10px; text-align: center;">
+        <small>Christmas Wheel 2019 | A mini-project by Unicown</small>
+      </footer>
+    </div>
+  </body>
+  <script>
+
+    const defaultRotationCount = (360 * 10);
+    var angle = 0;
+    let interval = '';
+
+    function lottery() {
+      document.getElementById('spin').style.display = 'block';
+      document.getElementById('reset').style.display = 'none';
+
+      document.getElementById('wheel').style.transition = "transform 0s cubic-bezier(.29,-0.08,.02,1)";
+      setTimeout(()=>{
+        document.getElementById('wheel').style.transform = "rotateZ(0deg)";
+        setTimeout(()=>{
+          document.getElementById('wheel').style.transition = "transform 5s cubic-bezier(.29,-0.08,.02,1)";
+        },50);
+      },10);
+      // document.getElementById('wheel').style.transform = "rotateZ(0deg)";
+      interval = setInterval(()=>{
+        if (angle == 360) {
+          angle = 0;
+        }
+        angle++;
+        // console.log(angle);
+      },2);
+    }
+
+    function getAngle() {
+      document.getElementById('spin').style.display = 'none';
+      document.getElementById('reset').style.display = 'block';
+      clearInterval(interval);
+      setTimeout(()=>{
+        document.getElementById('wheel').style.transform = "rotateZ(" + (angle + defaultRotationCount) + "deg)";
+      },500);
+    }
+    
+    lottery();
+
+  </script>
+</html>
